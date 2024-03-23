@@ -80,7 +80,8 @@ module.exports = class User {
             return {
                 user: {
                     email: createdUser.email,
-                    username: createdUser.username
+                    username: createdUser.username,
+                    id: createdUser._id
                 },
                 longToken
             };
