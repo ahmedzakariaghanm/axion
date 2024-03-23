@@ -29,8 +29,8 @@ module.exports = class Student {
             let student = { id, studentname, classroomid, schoolid };
             let result = await this.validators.student.updateStudent(student);
             if (result) return result;
-            await StudentModel.updateOne({ _id: id }, student)
-            let studentUpdated = await StudentModel.findOne({ _id: id })
+            await StudentModel.updateOne({ _id: id, schoolid }, student)
+            let studentUpdated = await StudentModel.findOne({ _id: id, schoolid })
             return {
                 student: studentUpdated
             };
@@ -40,12 +40,12 @@ module.exports = class Student {
         }
     }
 
-    async getStudent({ id }) {
+    async getStudent({ id, schoolid }) {
         try {
             let studentInput = { id };
             let result = await this.validators.student.getStudent(studentInput);
             if (result) return result;
-            let student = await StudentModel.findOne({ _id: id })
+            let student = await StudentModel.findOne({ _id: id, schoolid })
             return {
                 student: student
             };
@@ -55,12 +55,12 @@ module.exports = class Student {
         }
     }
 
-    async deleteStudent({ id }) {
+    async deleteStudent({ id, schoolid }) {
         try {
             let studentInput = { id };
             let result = await this.validators.student.deleteStudent(studentInput);
             if (result) return result;
-            let student = await StudentModel.deleteOne({ _id: id })
+            let student = await StudentModel.deleteOne({ _id: id, schoolid })
             return {};
         } catch (error) {
             console.log(error)

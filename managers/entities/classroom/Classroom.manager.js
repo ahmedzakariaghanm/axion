@@ -28,8 +28,8 @@ module.exports = class Classroom {
             let classroom = { id, classroomname, schoolid };
             let result = await this.validators.classroom.updateClassroom(classroom);
             if (result) return result;
-            await ClassroomModel.updateOne({ _id: id }, classroom)
-            let classroomUpdated = await ClassroomModel.findOne({ _id: id })
+            await ClassroomModel.updateOne({ _id: id, schoolid }, classroom)
+            let classroomUpdated = await ClassroomModel.findOne({ _id: id, schoolid })
             return {
                 classroom: classroomUpdated
             };
@@ -39,12 +39,12 @@ module.exports = class Classroom {
         }
     }
 
-    async getClassroom({ id }) {
+    async getClassroom({ id, schoolid }) {
         try {
             let classroomInput = { id };
             let result = await this.validators.classroom.getClassroom(classroomInput);
             if (result) return result;
-            let classroom = await ClassroomModel.findOne({ _id: id })
+            let classroom = await ClassroomModel.findOne({ _id: id, schoolid })
             return {
                 classroom: classroom
             };
@@ -54,12 +54,12 @@ module.exports = class Classroom {
         }
     }
 
-    async deleteClassroom({ id }) {
+    async deleteClassroom({ id, schoolid }) {
         try {
             let classroomInput = { id };
             let result = await this.validators.classroom.deleteClassroom(classroomInput);
             if (result) return result;
-            let classroom = await ClassroomModel.deleteOne({ _id: id })
+            let classroom = await ClassroomModel.deleteOne({ _id: id, schoolid })
             return {};
         } catch (error) {
             console.log(error)
