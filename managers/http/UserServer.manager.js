@@ -1,24 +1,25 @@
-const http              = require('http');
-const express           = require('express');
-const cors              = require('cors');
-const app               = express();
+const http = require('http');
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
 module.exports = class UserServer {
-    constructor({config, managers}){
-        this.config        = config;
-        this.userApi       = managers.userApi;
+    constructor({ config, managers, mwsRepo }) {
+        this.config = config;
+        this.userApi = managers.userApi;
+        this.mwsRepo = mwsRepo
     }
-    
+
     /** for injecting middlewares */
-    use(args){
+    use(args) {
         app.use(args);
     }
 
     /** server configs */
-    run(){
-        app.use(cors({origin: '*'}));
+    run() {
+        app.use(cors({ origin: '*' }));
         app.use(express.json());
-        app.use(express.urlencoded({ extended: true}));
+        app.use(express.urlencoded({ extended: true }));
         app.use('/static', express.static('public'));
 
         /** an error handler */
@@ -26,7 +27,8 @@ module.exports = class UserServer {
             console.error(err.stack)
             res.status(500).send('Something broke!')
         });
-        
+        app.use(this.mwsRepo.__longToken)
+
         /** a single middleware to handle all */
         app.all('/api/:moduleName/:fnName', this.userApi.mw);
 

@@ -1,41 +1,47 @@
 
 
 module.exports = {
-    createUser: [
+    createStudent: [
         {
-            model: 'username',
+            model: 'studentname',
             required: true,
         },
         {
-            model: 'password',
+            model: 'classroomid',
             required: true,
         },
         {
-            model: 'email',
-            required: true,
-        },
-        {
-            model: 'role',
+            model: 'schoolid',
             required: true,
         },
     ],
-    loginUser: [
+    updateStudent: [
         {
-            model: 'password',
+            model: 'id',
             required: true,
         },
         {
-            model: 'email',
+            model: 'studentname',
+            required: true,
+        },
+        {
+            model: 'classroomid',
+            required: true,
+        },
+        {
+            model: 'schoolid',
             required: true,
         },
     ],
-    assign: [
+    getStudent: [
         {
-            model: 'admins',
+            model: 'id',
             required: true,
         },
+    ],
+    deleteStudent: [
         {
-            model: 'schools',
+            model: 'id',
             required: true,
         },
     ],
