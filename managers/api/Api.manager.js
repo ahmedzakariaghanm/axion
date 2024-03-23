@@ -172,7 +172,7 @@ module.exports = class ApiHandler {
                     if (moduleMatrix.role != req.decoded.role) {
                         return this.managers.responseDispatcher.dispatch(res, { ok: false, message: "failed to perform this action. review your access" });
                     }
-                    if ('admin' == req.decoded.role && !req.decoded.schools.includes(body.schoolid)) {
+                    if ('admin' == req.decoded.role && !req.decoded.schools.includes(body.schoolid) && fnName != "getAll") {
                         return this.managers.responseDispatcher.dispatch(res, { ok: false, message: "failed to perform this action. you have no acess to this entity" });
                     }
                 }
