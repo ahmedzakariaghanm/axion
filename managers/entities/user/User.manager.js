@@ -98,9 +98,11 @@ module.exports = class User {
             let result = await this.validators.user.assign(assignObj);
             if (result) return result;
             let createdUser = await UserModel.updateMany({ _id: { $in: admins } }, [{ $set: { schools } }]);
-            return {
-                user: createdUser
-            };
+            if (createdUser.matchedCount > 0) {
+                return "Admins assigned successfully";
+            } else {
+                throw "Admins not found"
+            }
 
         } catch (e) {
             // console.log(e)

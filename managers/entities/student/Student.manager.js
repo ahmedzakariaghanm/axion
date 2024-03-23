@@ -61,7 +61,11 @@ module.exports = class Student {
             let result = await this.validators.student.deleteStudent(studentInput);
             if (result) return result;
             let student = await StudentModel.deleteOne({ _id: id, schoolid })
-            return {};
+            if (student.deletedCount > 0) {
+                return "Deleted successfully";
+            } else {
+                throw "Student not found"
+            }
         } catch (error) {
             console.log(error)
             return error

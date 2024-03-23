@@ -59,6 +59,11 @@ module.exports = class School {
             let result = await this.validators.school.deleteSchool(schoolInput);
             if (result) return result;
             let school = await SchoolModel.deleteOne({ _id: id })
+            if (school.deletedCount > 0) {
+                return "Deleted successfully";
+            } else {
+                throw "School not found"
+            }
             return {};
         } catch (error) {
             console.log(error)
